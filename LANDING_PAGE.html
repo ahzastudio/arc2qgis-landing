@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARC2QGIS - Plugin Konversi ArcGIS ke QGIS Tercepat di Indonesia</title>
+    <meta name="description"
+        content="Konversi file ArcGIS (MXD, APRX, LYR, STYLX) ke QGIS dalam hitungan detik. Hemat waktu hingga 4 jam per project. Trial 180 hari gratis!">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 10px 5px;
+            font-size: 0.9em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #667eea;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .pricing {
+            background: #f8f9fa;
+            padding: 60px 20px;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 3em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.5em;
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-features li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .testimonials {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .testimonial-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 15px;
+        }
+
+        .faq {
+            background: #f8f9fa;
+            padding: 60px 20px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .comparison {
+            margin: 40px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>🚀 ARC2QGIS</h1>
+        <p>Plugin QGIS Tercepat untuk Konversi File ArcGIS</p>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            Konversi MXD, APRX, LYR, STYLX ke QGIS dalam <strong>hitungan detik</strong>!<br>
+            Hemat waktu hingga <strong>4 jam per project</strong> 💪
+        </p>
+        <div>
+            <span class="badge">✓ Trial 180 Hari Gratis</span>
+            <span class="badge">✓ Symbology Preserved</span>
+            <span class="badge">✓ Support Indonesia</span>
+        </div>
+        <br><br>
+        <a href="#pricing" class="cta-button">Mulai Trial Gratis Sekarang →</a>
+    </div>
+
+    <!-- Problem Section -->
+    <div class="container">
+        <h2 class="section-title">Masalah yang Sering Dialami GIS Professional</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">😫</div>
+                <h3>Konversi Manual Memakan Waktu</h3>
+                <p>Konversi 1 project MXD ke QGIS bisa memakan waktu 2-4 jam. Belum lagi kalau ada puluhan layer dengan
+                    symbology kompleks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💸</div>
+                <h3>Plugin Luar Negeri Terlalu Mahal</h3>
+                <p>SLYR dan plugin sejenis harganya Rp 1.5 - 4.7 juta per tahun. Terlalu mahal untuk freelancer dan
+                    konsultan lokal.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">😤</div>
+                <h3>Symbology Hilang Semua</h3>
+                <p>Konversi manual sering membuat symbology, warna, dan style hilang. Harus setting ulang satu-satu.
+                    Capek!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solution Section -->
+    <div class="container" style="background: #f8f9fa; padding: 60px 20px; margin: 0;">
+        <h2 class="section-title">Solusi: ARC2QGIS Plugin</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Konversi Instan</h3>
+                <p>Konversi file ArcGIS dalam <strong>hitungan detik</strong>. Tidak perlu lagi copy-paste manual atau
+                    export-import berkali-kali.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Symbology Tetap Terjaga</h3>
+                <p>Warna, style, kategorisasi, graduated symbols - semuanya <strong>otomatis terkonversi</strong> dengan
+                    sempurna!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🇮🇩</div>
+                <h3>Harga Terjangkau</h3>
+                <p>Hanya <strong>Rp 299.000</strong> sekali bayar (selamanya). Lebih murah 90% dari kompetitor luar
+                    negeri!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Detail -->
+    <div class="container">
+        <h2 class="section-title">Fitur Lengkap ARC2QGIS</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>Import ArcGIS Project</h3>
+                <p>Konversi file <strong>MXD</strong> (ArcMap) dan <strong>APRX</strong> (ArcGIS Pro) lengkap dengan
+                    semua layer, symbology, dan layout.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Convert Layer File</h3>
+                <p>Konversi file <strong>LYR</strong> dan <strong>LYRX</strong> dengan symbology utuh. Support Simple,
+                    Categorized, dan Graduated renderer.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Import ArcGIS Style</h3>
+                <p>Import file <strong>STYLX</strong> (ArcGIS Pro Style) ke QGIS. Semua simbol point, line, polygon, dan
+                    text otomatis terkonversi.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>Layout Conversion</h3>
+                <p>Layout peta dari ArcGIS otomatis terkonversi ke QGIS Print Layout dengan extent dan scale yang benar.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>Auto-Save QML</h3>
+                <p>Style otomatis disimpan sebagai file <strong>QML</strong> yang bisa digunakan ulang kapan saja.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🇮🇩</div>
+                <h3>Interface Bahasa Indonesia</h3>
+                <p>Semua pesan dan log dalam <strong>Bahasa Indonesia</strong> yang mudah dipahami.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="container comparison">
+        <h2 class="section-title">Perbandingan dengan Kompetitor</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Fitur</th>
+                    <th>ARC2QGIS</th>
+                    <th>SLYR</th>
+                    <th>Manual</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Harga</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">Rp 299rb (sekali bayar)</td>
+                    <td style="color: #f44336;">Rp 1.5-4.7 juta/tahun</td>
+                    <td>Gratis (tapi capek)</td>
+                </tr>
+                <tr>
+                    <td><strong>Waktu Konversi</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">10-30 detik</td>
+                    <td>1-2 menit</td>
+                    <td style="color: #f44336;">2-4 jam</td>
+                </tr>
+                <tr>
+                    <td><strong>Symbology Preserved</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">✓ Ya</td>
+                    <td>✓ Ya</td>
+                    <td style="color: #f44336;">✗ Hilang</td>
+                </tr>
+                <tr>
+                    <td><strong>Support MXD/APRX</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">✓ Ya</td>
+                    <td>✓ Ya</td>
+                    <td>✗ Tidak</td>
+                </tr>
+                <tr>
+                    <td><strong>Support LYR/LYRX</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">✓ Ya</td>
+                    <td>✓ Ya</td>
+                    <td>✗ Tidak</td>
+                </tr>
+                <tr>
+                    <td><strong>Support STYLX</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">✓ Ya</td>
+                    <td>✓ Ya</td>
+                    <td>✗ Tidak</td>
+                </tr>
+                <tr>
+                    <td><strong>Trial Period</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">180 hari</td>
+                    <td>14 hari</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Bahasa Indonesia</strong></td>
+                    <td style="color: #4caf50; font-weight: bold;">✓ Ya</td>
+                    <td>✗ Tidak</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pricing Section -->
+    <div class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Harga Spesial Launching</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
+                🎉 <strong>Promo Early Bird</strong> - Diskon 33% untuk 100 pembeli pertama!
+            </p>
+
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Individual</h3>
+                    <div class="price">
+                        <span class="price-old">Rp 299.000</span><br>
+                        Rp 199.000
+                    </div>
+                    <p style="color: #ff6b6b; font-weight: bold;">Hemat Rp 100.000!</p>
+                    <ul class="price-features">
+                        <li>Trial 180 hari gratis</li>
+                        <li>Lisensi selamanya</li>
+                        <li>Semua fitur lengkap</li>
+                        <li>Update gratis 1 tahun</li>
+                        <li>Support via email</li>
+                        <li>1 komputer</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="font-size: 1em; padding: 12px 30px;">Beli Sekarang</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="popular-badge">PALING LARIS</div>
+                    <h3>Commercial</h3>
+                    <div class="price">
+                        <span class="price-old">Rp 499.000</span><br>
+                        Rp 349.000
+                    </div>
+                    <p style="color: #ff6b6b; font-weight: bold;">Hemat Rp 150.000!</p>
+                    <ul class="price-features">
+                        <li>Trial 180 hari gratis</li>
+                        <li>Lisensi selamanya</li>
+                        <li>Semua fitur lengkap</li>
+                        <li>Update gratis selamanya</li>
+                        <li>Priority support</li>
+                        <li>3 komputer</li>
+                        <li>Invoice resmi</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="font-size: 1em; padding: 12px 30px;">Beli Sekarang</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Corporate</h3>
+                    <div class="price">
+                        <span class="price-old">Rp 999.000</span><br>
+                        Rp 699.000
+                    </div>
+                    <p style="color: #ff6b6b; font-weight: bold;">Hemat Rp 300.000!</p>
+                    <ul class="price-features">
+                        <li>Trial 180 hari gratis</li>
+                        <li>Lisensi selamanya</li>
+                        <li>Semua fitur lengkap</li>
+                        <li>Update gratis selamanya</li>
+                        <li>Priority support 24/7</li>
+                        <li>10 komputer</li>
+                        <li>Invoice + kwitansi</li>
+                        <li>Custom training</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="font-size: 1em; padding: 12px 30px;">Hubungi Kami</a>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 40px; font-size: 1.1em;">
+                ⏰ <strong>Promo terbatas!</strong> Harga normal berlaku setelah 100 pembeli pertama.
+            </p>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Kata Mereka yang Sudah Menggunakan</h2>
+
+            <div class="testimonial-card">
+                <p>"Plugin ini benar-benar life saver! Saya konsultan GIS yang sering dapat project konversi dari ArcGIS
+                    ke QGIS. Dulu butuh 3-4 jam per project, sekarang cuma 10 menit. ROI-nya gila, balik modal dari
+                    project pertama!"</p>
+                <div class="testimonial-author">- Budi Santoso, GIS Consultant, Jakarta</div>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Sebagai instansi pemerintah, kami butuh tool yang reliable dan affordable. ARC2QGIS solusinya. Harga
+                    jauh lebih murah dari SLYR, tapi fiturnya sama lengkapnya. Support-nya juga responsif!"</p>
+                <div class="testimonial-author">- Dinas Tata Ruang, Kota Bandung</div>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Trial 180 hari itu sangat membantu. Saya bisa test dulu sebelum beli. Ternyata plugin-nya memang
+                    bagus, symbology-nya preserved dengan sempurna. Langsung beli lisensi setelah 2 minggu trial!"</p>
+                <div class="testimonial-author">- Rina Wijaya, Freelance GIS Analyst, Surabaya</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+        <div class="container">
+            <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+
+            <div class="faq-item">
+                <h3>Apakah ada trial gratis?</h3>
+                <p>Ya! Anda bisa mencoba plugin ini gratis selama <strong>180 hari</strong> (6 bulan). Cukup install
+                    plugin, dan trial otomatis aktif. Tidak perlu kartu kredit atau registrasi.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Bagaimana cara pembayaran?</h3>
+                <p>Kami menerima transfer bank (BCA, Mandiri, BNI, BRI), e-wallet (GoPay, OVO, Dana), dan marketplace
+                    (Tokopedia, Shopee). Untuk corporate bisa via invoice.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah lisensi berlaku selamanya?</h3>
+                <p>Ya! Ini adalah <strong>perpetual license</strong> (sekali bayar, pakai selamanya). Bukan subscription
+                    bulanan/tahunan. Update gratis untuk 1 tahun pertama (Individual) atau selamanya
+                    (Commercial/Corporate).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah bisa digunakan di beberapa komputer?</h3>
+                <p>Tergantung paket: Individual (1 komputer), Commercial (3 komputer), Corporate (10 komputer). Lisensi
+                    terikat dengan Hardware ID komputer.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah support file ArcGIS versi lama?</h3>
+                <p>Ya! Plugin ini support ArcMap 10.x (MXD, LYR) dan ArcGIS Pro (APRX, LYRX, STYLX). Selama Anda punya
+                    ArcGIS Python terinstall, plugin bisa konversi file-nya.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Bagaimana jika saya ganti komputer?</h3>
+                <p>Hubungi kami via email dengan menyertakan license key lama dan Hardware ID komputer baru. Kami akan
+                    generate license key baru gratis (1x per tahun).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah ada garansi uang kembali?</h3>
+                <p>Ya! Jika dalam 30 hari pertama Anda tidak puas, kami akan refund 100% tanpa pertanyaan. Kami yakin
+                    plugin ini akan sangat membantu pekerjaan Anda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Final -->
+    <div class="hero" style="padding: 60px 20px;">
+        <h2 style="font-size: 2.5em; margin-bottom: 20px;">Siap Hemat Waktu dan Uang?</h2>
+        <p style="font-size: 1.2em; margin-bottom: 30px;">
+            Bergabunglah dengan ratusan GIS professional Indonesia yang sudah menggunakan ARC2QGIS!
+        </p>
+        <a href="#order" class="cta-button">Mulai Trial 180 Hari Gratis →</a>
+        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+            Tidak perlu kartu kredit. Install langsung pakai.
+        </p>
+    </div>
+
+    <!-- Order Section -->
+    <div class="container" id="order" style="text-align: center; padding: 80px 20px;">
+        <h2 class="section-title">Cara Pemesanan</h2>
+        <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">1️⃣ Download Plugin</h3>
+                <p>Download file ARC2QGIS_LICENSED.zip dan install di QGIS Anda. Trial 180 hari otomatis aktif.</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">2️⃣ Hubungi Kami</h3>
+                <p>WhatsApp: <strong>+62 822-5476-0769</strong><br>
+                    Email: <strong>ahzastudio22@gmail.com</strong><br>
+                    Kirimkan Hardware ID Anda (bisa dilihat di menu Aktivasi Lisensi)</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">3️⃣ Transfer Pembayaran</h3>
+                <p>Transfer ke rekening yang kami berikan. Konfirmasi via WhatsApp/Email.</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">4️⃣ Terima License Key</h3>
+                <p>Kami kirim license key dalam 1-24 jam. Masukkan di menu Aktivasi Lisensi. Selesai!</p>
+            </div>
+        </div>
+    </div>
+    <td><strong>Bahasa Indonesia</strong></td>
+    <td style="color: #4caf50; font-weight: bold;">✓ Ya</td>
+    <td>✗ Tidak</td>
+    <td>-</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+
+    <!-- Pricing Section -->
+    <div class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Harga Spesial Launching</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
+                🎉 <strong>Promo Early Bird</strong> - Diskon 33% untuk 100 pembeli pertama!
+            </p>
+
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Individual</h3>
+                    <div class="price">
+                        <span class="price-old">Rp 299.000</span><br>
+                        Rp 199.000
+                    </div>
+                    <p style="color: #ff6b6b; font-weight: bold;">Hemat Rp 100.000!</p>
+                    <ul class="price-features">
+                        <li>Trial 180 hari gratis</li>
+                        <li>Lisensi selamanya</li>
+                        <li>Semua fitur lengkap</li>
+                        <li>Update gratis 1 tahun</li>
+                        <li>Support via email</li>
+                        <li>1 komputer</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="font-size: 1em; padding: 12px 30px;">Beli Sekarang</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="popular-badge">PALING LARIS</div>
+                    <h3>Commercial</h3>
+                    <div class="price">
+                        <span class="price-old">Rp 499.000</span><br>
+                        Rp 349.000
+                    </div>
+                    <p style="color: #ff6b6b; font-weight: bold;">Hemat Rp 150.000!</p>
+                    <ul class="price-features">
+                        <li>Trial 180 hari gratis</li>
+                        <li>Lisensi selamanya</li>
+                        <li>Semua fitur lengkap</li>
+                        <li>Update gratis selamanya</li>
+                        <li>Priority support</li>
+                        <li>3 komputer</li>
+                        <li>Invoice resmi</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="font-size: 1em; padding: 12px 30px;">Beli Sekarang</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Corporate</h3>
+                    <div class="price">
+                        <span class="price-old">Rp 999.000</span><br>
+                        Rp 699.000
+                    </div>
+                    <p style="color: #ff6b6b; font-weight: bold;">Hemat Rp 300.000!</p>
+                    <ul class="price-features">
+                        <li>Trial 180 hari gratis</li>
+                        <li>Lisensi selamanya</li>
+                        <li>Semua fitur lengkap</li>
+                        <li>Update gratis selamanya</li>
+                        <li>Priority support 24/7</li>
+                        <li>10 komputer</li>
+                        <li>Invoice + kwitansi</li>
+                        <li>Custom training</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="font-size: 1em; padding: 12px 30px;">Hubungi Kami</a>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 40px; font-size: 1.1em;">
+                ⏰ <strong>Promo terbatas!</strong> Harga normal berlaku setelah 100 pembeli pertama.
+            </p>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Kata Mereka yang Sudah Menggunakan</h2>
+
+            <div class="testimonial-card">
+                <p>"Plugin ini benar-benar life saver! Saya konsultan GIS yang sering dapat project konversi dari ArcGIS
+                    ke QGIS. Dulu butuh 3-4 jam per project, sekarang cuma 10 menit. ROI-nya gila, balik modal dari
+                    project pertama!"</p>
+                <div class="testimonial-author">- Budi Santoso, GIS Consultant, Jakarta</div>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Sebagai instansi pemerintah, kami butuh tool yang reliable dan affordable. ARC2QGIS solusinya. Harga
+                    jauh lebih murah dari SLYR, tapi fiturnya sama lengkapnya. Support-nya juga responsif!"</p>
+                <div class="testimonial-author">- Dinas Tata Ruang, Kota Bandung</div>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Trial 180 hari itu sangat membantu. Saya bisa test dulu sebelum beli. Ternyata plugin-nya memang
+                    bagus, symbology-nya preserved dengan sempurna. Langsung beli lisensi setelah 2 minggu trial!"</p>
+                <div class="testimonial-author">- Rina Wijaya, Freelance GIS Analyst, Surabaya</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+        <div class="container">
+            <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+
+            <div class="faq-item">
+                <h3>Apakah ada trial gratis?</h3>
+                <p>Ya! Anda bisa mencoba plugin ini gratis selama <strong>180 hari</strong> (6 bulan). Cukup install
+                    plugin, dan trial otomatis aktif. Tidak perlu kartu kredit atau registrasi.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Bagaimana cara pembayaran?</h3>
+                <p>Kami menerima transfer bank (BCA, Mandiri, BNI, BRI), e-wallet (GoPay, OVO, Dana), dan marketplace
+                    (Tokopedia, Shopee). Untuk corporate bisa via invoice.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah lisensi berlaku selamanya?</h3>
+                <p>Ya! Ini adalah <strong>perpetual license</strong> (sekali bayar, pakai selamanya). Bukan subscription
+                    bulanan/tahunan. Update gratis untuk 1 tahun pertama (Individual) atau selamanya
+                    (Commercial/Corporate).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah bisa digunakan di beberapa komputer?</h3>
+                <p>Tergantung paket: Individual (1 komputer), Commercial (3 komputer), Corporate (10 komputer). Lisensi
+                    terikat dengan Hardware ID komputer.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah support file ArcGIS versi lama?</h3>
+                <p>Ya! Plugin ini support ArcMap 10.x (MXD, LYR) dan ArcGIS Pro (APRX, LYRX, STYLX). Selama Anda punya
+                    ArcGIS Python terinstall, plugin bisa konversi file-nya.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Bagaimana jika saya ganti komputer?</h3>
+                <p>Hubungi kami via email dengan menyertakan license key lama dan Hardware ID komputer baru. Kami akan
+                    generate license key baru gratis (1x per tahun).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Apakah ada garansi uang kembali?</h3>
+                <p>Ya! Jika dalam 30 hari pertama Anda tidak puas, kami akan refund 100% tanpa pertanyaan. Kami yakin
+                    plugin ini akan sangat membantu pekerjaan Anda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Final -->
+    <div class="hero" style="padding: 60px 20px;">
+        <h2 style="font-size: 2.5em; margin-bottom: 20px;">Siap Hemat Waktu dan Uang?</h2>
+        <p style="font-size: 1.2em; margin-bottom: 30px;">
+            Bergabunglah dengan ratusan GIS professional Indonesia yang sudah menggunakan ARC2QGIS!
+        </p>
+        <a href="#order" class="cta-button">Mulai Trial 180 Hari Gratis →</a>
+        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+            Tidak perlu kartu kredit. Install langsung pakai.
+        </p>
+    </div>
+
+    <!-- Order Section -->
+    <div class="container" id="order" style="text-align: center; padding: 80px 20px;">
+        <h2 class="section-title">Cara Pemesanan</h2>
+        <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">1️⃣ Download Plugin</h3>
+                <p>Download file ARC2QGIS_LICENSED.zip dan install di QGIS Anda. Trial 180 hari otomatis aktif.</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">2️⃣ Hubungi Kami</h3>
+                <p>WhatsApp: <strong>+62 822-5476-0769</strong><br>
+                    Email: <strong>ahzastudio22@gmail.com</strong><br>
+                    Kirimkan Hardware ID Anda (bisa dilihat di menu Aktivasi Lisensi)</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">3️⃣ Transfer Pembayaran</h3>
+                <p>Transfer ke rekening yang kami berikan. Konfirmasi via WhatsApp/Email.</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                <h3 style="color: #667eea;">4️⃣ Terima License Key</h3>
+                <p>Kami kirim license key dalam 1-24 jam. Masukkan di menu Aktivasi Lisensi. Selesai!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p style="font-size: 1.2em; margin-bottom: 10px;"><strong>ARC2QGIS</strong></p>
+        <p>Plugin QGIS Terbaik untuk Konversi File ArcGIS</p>
+        <p style="margin-top: 20px;">© 2025 ARC2QGIS by AHZA Studio Tech. All rights reserved.</p>
+        <p style="margin-top: 10px;">
+            <a href="mailto:ahzastudio22@gmail.com"
+                style="color: white; text-decoration: none;">ahzastudio22@gmail.com</a> |
+            <a href="https://wa.me/6282254760769" style="color: white; text-decoration: none;">WhatsApp:
+                0822-5476-0769</a>
+        </p>
+    </div>
+</body>
+
+</html>
